@@ -20,9 +20,31 @@ namespace HotelBot.Dialogs
         {
             await context.PostAsync("Hi I'm John Bot");
 
+            await Respond(context);
+
             // Bot always needs somewhere to go next.
             context.Wait(MessageReceivedAsync);
         }
+
+        public static async Task Respond(IDialogContext context)
+        {
+            var userName = string.Empty;
+            context.UserData.TryGetValue<string>("Name", out userName);
+
+            // If we don't have it already, ask for it.
+            if (string.IsNullOrEmpty(userName))
+            {
+                await context.PostAsync("What is your name please?");
+
+                // Record in state that we need to get the name. The next iteration will pick this up and run with it.
+                context.UserData.SetValue<bool>("NeedToGetName", true);
+            }
+            else
+            {
+                await context.PostAsync($"Hi {userName}, how can I help you today?");
+            }
+        }
+
 
         /// <summary>
         /// Called for subsequent messages in the dialog.
@@ -34,8 +56,6 @@ namespace HotelBot.Dialogs
         {
             var message = await result;
             var userName = string.Empty;
-
-
             var needToGetName = false;
 
 
@@ -50,22 +70,10 @@ namespace HotelBot.Dialogs
                 context.UserData.SetValue<bool>("NeedToGetName", false);
             }
 
-            // If we don't have it already, ask for it.
-            if (string.IsNullOrEmpty(userName))
-            {
-                await context.PostAsync("What is your name please?");
+            await Respond(context);
 
-                // Record in state that we need to get the name. The next iteration will pick this up and run with it.
-                context.UserData.SetValue<bool>("NeedToGetName", true);
-            }
-            else
-            {
-                await context.PostAsync($"Hi {userName}, how can I help you today?");
-            }
-
-            // Bot always needs somewhere to go next.
-            context.Wait(MessageReceivedAsync);
-
+            // Done with this instance, go back to root.
+            context.Done(message);
         }
-    } 
+    }
 }
