@@ -119,6 +119,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FacebookModels\FacebookAddress.cs" />
+    <Compile Include="Models\FacebookModels\FacebookAdjustment.cs" />
+    <Compile Include="Models\FacebookModels\FacebookAttachment.cs" />
+    <Compile Include="Models\FacebookModels\FacebookButton.cs" />
+    <Compile Include="Models\FacebookModels\FacebookElement.cs" />
+    <Compile Include="Models\FacebookModels\FacebookMessage.cs" />
+    <Compile Include="Models\FacebookModels\FacebookPayload.cs" />
+    <Compile Include="Models\FacebookModels\FacebookPaymentSummary.cs" />
+    <Compile Include="Models\FacebookModels\FacebookPriceList.cs" />
+    <Compile Include="Models\FacebookModels\FacebookSummary.cs" />
     <Compile Include="Models\RoomReservation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -126,6 +136,7 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\HotelBot20170730115711 - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
