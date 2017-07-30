@@ -6,6 +6,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using System;
 using HotelBot.Dialogs;
+using HotelBot.Models;
 
 namespace HotelBot
 {
@@ -20,7 +21,7 @@ namespace HotelBot
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                await Conversation.SendAsync(activity, () => HotelBotDialog.dialog);
+                await Conversation.SendAsync(activity, MakeLuisDialog);
             }
             else
             {
@@ -29,6 +30,12 @@ namespace HotelBot
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
+
+        internal static IDialog<RoomReservation> MakeLuisDialog()
+        {
+            return Chain.From(() => new LUISDialog(RoomReservation.BuildForm));
+        }
+
 
         private Activity HandleSystemMessage(Activity message)
         {
